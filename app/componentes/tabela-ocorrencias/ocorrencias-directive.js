@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .directive('tabelaOcorrencias', tabelaOcorrencias);
 
-    tabelaOcorrencias.inject = [''];
+    tabelaOcorrencias.$inject = [''];
     function tabelaOcorrencias() {
         // Usage:
         //
@@ -30,10 +30,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('TabelaOcorrenciasController', TabelaOcorrenciasController);
 
-    TabelaOcorrenciasController.inject = ['$scope'];
+    TabelaOcorrenciasController.$inject = ['$scope'];
     function TabelaOcorrenciasController($scope) {
         var vm = this;
 

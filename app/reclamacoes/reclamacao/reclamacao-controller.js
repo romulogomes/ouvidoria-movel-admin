@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('ReclamacaoController', ReclamacaoController);
 
-    ReclamacaoController.inject = ['$scope', '$routeParams', '$log', '$location', 'ReclamacoesService', 'UsuariosService', 'uiGmapGoogleMapApi', 'Flash'];
+    ReclamacaoController.$inject = ['$scope', '$routeParams', '$log', '$location', 'ReclamacoesService', 'UsuariosService', 'uiGmapGoogleMapApi', 'Flash'];
     function ReclamacaoController($scope, $routeParams, $log, $location, ReclamacoesService, UsuariosService, uiGmapGoogleMapApi, Flash) {
         
         var vm = this;       

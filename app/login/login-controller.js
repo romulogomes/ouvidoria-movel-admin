@@ -20,15 +20,18 @@
             $scope.loading = true;
 
             AuthenticationService.Login(usuario.email, usuario.senha, function(response){
-                if (response.data == 'false'){
+                if (response.data && response.data.erro) {
                     alert('Usuário ou senha incorreto(s)');
                     $scope.loading = false;
-                } else {
+                } else if (response.data && response.data.id) {
                     $scope.loading = false;
                     var user = response.data;
-                    AuthenticationService.SetCredentials(user.id_admin, user.nome, user.nivel, user.senha, function(){
-                        location.href = '../ouvidoria/#/';
+                    AuthenticationService.SetCredentials(user.id_admin, user.nome, user.nivel, usuario.senha, function(){
+                        location.href = 'index.html#/';
                     });
+                } else {
+                    alert('Erro na autenticação');
+                    $scope.loading = false;
                 }
             });
 

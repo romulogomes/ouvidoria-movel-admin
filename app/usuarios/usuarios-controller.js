@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('UsuariosController', UsuariosController);
 
-    UsuariosController.inject = ['$scope', '$http', 'UsuariosService'];
+    UsuariosController.$inject = ['$scope', '$http', 'UsuariosService'];
     function UsuariosController($scope, $http, UsuariosService) {
         var vm = this;
         

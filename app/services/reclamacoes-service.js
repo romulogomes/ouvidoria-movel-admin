@@ -2,14 +2,12 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .factory('ReclamacoesService', ReclamacoesService);
 
-    ReclamacoesService.inject = ['$http', '$q', '$location', '$rootScope'];
+    ReclamacoesService.$inject = ['$http', '$q', '$location', '$rootScope', 'API_CONFIG'];
 
-    function ReclamacoesService($http, $q, $location, $rootScope) {
-
-        var urlServer = 'http://www.doitsolucoes.com/apps/ouvidoria/ws/respostas';
+    function ReclamacoesService($http, $q, $location, $rootScope, API_CONFIG) {
 
         var service = {
             getReclamacoes:         getReclamacoes,
@@ -28,7 +26,7 @@
 
         ////////////////
         function getReclamacoes() {
-            return $http.get('http://www.doitsolucoes.com/apps/ouvidoria/lista_reclamacoes.php')
+            return $http.get(API_CONFIG.BASE_URL + '/reclamacoes/all')
                 .then(function(response) {
                     if (typeof response == 'object') {
                         return response.data;
@@ -41,8 +39,7 @@
         }
 
         function getReclamacoesStatus(status) {
-            return $http.get('http://www.doitsolucoes.com/apps/ouvidoria/lista_reclamacoes_status.php?status='+status)
-            // return $http.get('http://localhost/ouvidoria/ws/reclamacoes/status/' + status)
+            return $http.get(API_CONFIG.BASE_URL + '/reclamacoes/all?status=' + status)
                 .then(function(response) {
                     if (typeof response == 'object') {
                         return response.data;
@@ -55,23 +52,11 @@
         }
 
         function getReclamacao(id) {
-             var dados = {
-                "id_reclamacao": id
-            };
-
             return $http({
-                method: 'POST',
-                url: 'http://www.doitsolucoes.com/apps/ouvidoria/get_reclamacao.php',
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                method: 'GET',
+                url: API_CONFIG.BASE_URL + '/reclamacoes/' + id,
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             }).then(function successCallback(response) {
                 if (typeof response == 'object'){
                     return response.data;
@@ -86,22 +71,15 @@
         function respReclamacao(reclamacao, resposta) {
             var dados = {
                 "descricao": resposta.descricao,
-                "reclamacao": reclamacao.id_reclamacao,
-                "admin_fk": 1
+                "reclamacao_id": reclamacao.id || reclamacao.id_reclamacao,
+                "administrador_id": 1
             };
 
             return $http({
                 method: 'POST',
-                url: urlServer,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/json charset=utf-8'
-                },
-                // transformRequest: function(obj) {
-                //     var str = [];
-                //     for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                //     return str.join("&");
-                // },
+                url: API_CONFIG.BASE_URL + '/respostas',
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS,
                 data: dados
             }).then(function successCallback(response) {
                 if (typeof response == 'object'){
@@ -117,23 +95,15 @@
         function respOcorrencia(ocorrencia, resposta) {
             var dados = {
                 "descricao": resposta.descricao,
-                "ocorrencia": ocorrencia.id_ocorrencia,
-                "admin_fk": 1
+                "ocorrencia_id": ocorrencia.id || ocorrencia.id_ocorrencia,
+                "administrador_id": 1
             };
 
             return $http({
                 method: 'POST',
-                url: 'http://www.doitsolucoes.com/apps/ouvidoria/ws/respostas_ocorrencias',
-                timeout: 5000,
-                headers: {
-                    // 'Content-Type': 'application/x-www-form-urlencoded'
-                    'Content-Type': 'application/json charset=utf-8'
-                },
-                // transformRequest: function(obj) {
-                //     var str = [];
-                //     for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                //     return str.join("&");
-                // },
+                url: API_CONFIG.BASE_URL + '/respostas_ocorrencia',
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS,
                 data: dados
             }).then(function successCallback(response) {
                 if (typeof response == 'object'){
@@ -147,22 +117,11 @@
         }
 
         function getRespostas(id){
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/lista_respostas.php";
-            var dados = {"reclamacao": id};
-            
             return $http({
-                method: 'POST',
-                url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                method: 'GET',
+                url: API_CONFIG.BASE_URL + '/reclamacoes/' + id + '/respostas',
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -176,23 +135,11 @@
         }
 
         function getReclamacoesUsuario(id_usuario){
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/lista_reclamacoes.php";
-            var dados = {"id_usuario": id_usuario};
-            console.log(dados);
-
             return $http({
-                method: 'POST',
-                url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                method: 'GET',
+                url: API_CONFIG.BASE_URL + '/usuarios/' + id_usuario + '/reclamacoes',
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -206,7 +153,7 @@
         }
 
         function getUltimasReclamacoes(){
-           return $http.get('http://www.doitsolucoes.com/apps/ouvidoria/ultimas_reclamacoes.php')
+           return $http.get(API_CONFIG.BASE_URL + '/reclamacoes/last')
                 .then(function(response) {
                     if (typeof response == 'object') {
                         return response.data;
@@ -248,25 +195,13 @@
         }
 
         function mudaStatus(id, status){
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/ws/reclamacoes/" + id + '/mudarstatus';
-            // var url = "http://localhost/ouvidoria/ws/reclamacoes/" + id + '/mudarstatus';
-            return $http.put(url, {"id_reclamacao": id, "status": status})
-            // var url = "http://www.doitsolucoes.com/apps/ouvidoria/muda_status_reclamacao.php";
-            // var dados = {"id_reclamacao": id, "status": status};
-            // return $http({
-            //     method: 'PUT',
-            //     url: url,
-            //     timeout: 5000,
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     },
-            //     transformRequest: function(obj) {
-            //         var str = [];
-            //         for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            //         return str.join("&");
-            //     },
-            //     data: dados
-            // })
+            return $http({
+                method: 'PUT',
+                url: API_CONFIG.BASE_URL + '/reclamacoes/' + id,
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS,
+                data: {"status": status}
+            })
             .then(function(response){
                 if (typeof response == 'object'){
                     return response.data;

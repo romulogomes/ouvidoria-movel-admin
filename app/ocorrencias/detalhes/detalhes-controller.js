@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('DetalhesController', DetalhesController);
 
-    DetalhesController.inject = ['$scope', '$location', '$routeParams', 'OcorrenciasService', 'UsuariosService'];
+    DetalhesController.$inject = ['$scope', '$location', '$routeParams', 'OcorrenciasService', 'UsuariosService'];
     function DetalhesController($scope, $location, $routeParams, OcorrenciasService, UsuariosService) {
         var vm = this;
         

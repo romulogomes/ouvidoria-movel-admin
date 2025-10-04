@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('ElogiosController', ElogiosController);
 
-    ElogiosController.inject = ['$scope', 'OcorrenciasService'];
+    ElogiosController.$inject = ['$scope', 'OcorrenciasService'];
     function ElogiosController($scope, OcorrenciasService) {
         var vm = this;
 

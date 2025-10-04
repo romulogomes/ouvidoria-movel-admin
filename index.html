@@ -2,7 +2,7 @@
 <!--[if IE 8]><html class="ie8 no-js" lang="pt"><![endif]-->
 <!--[if IE 9]><html class="ie9 no-js" lang="pt"><![endif]-->
 <!--[if !IE]><!-->
-<html lang="pt" class="no-js" ng-app="adminApp">
+<html lang="pt" class="no-js" ng-app="app">
 	<!--<![endif]-->
 	<!-- start: HEAD -->
 	<head>
@@ -94,21 +94,26 @@
 
 
         <script src="app/app.js"></script>
+        <script src="config.js"></script>
         <script src="app/admin.js"></script>
-        <script src="app/admin-controller.js"></script>
+        
+        <!-- Services first -->
+		<script src="app/services/ocorrencias-service.js"></script>
+		<script src="app/services/dashboard-service.js"></script>
+		<script src="app/services/reclamacoes-service.js"></script>
+		<script src="app/services/usuarios-service.js"></script>
+		
+		<!-- Components -->
 		<script src="app/componentes/alert/alert.js"></script>
 		<script src="app/componentes/alert/alert-service.js"></script>
-
-		<script src="app/services/ocorrencias-service.js"></script>
 		<script src="app/componentes/tabela-ocorrencias/ocorrencias-directive.js"></script>
 		<script src="app/componentes/tabela-respostas/respostas-directive.js"></script>
 		<script src="app/componentes/active-link/activelink-directive.js"></script>
 
+		<!-- Controllers after services -->
+        <script src="app/admin-controller.js"></script>
 		<script src="app/dashboard/dashboard-controller.js"></script>
-
 		<script src="app/sugestoes/sugestoes-controller.js"></script>
-
-		<script src="app/services/reclamacoes-service.js"></script>
         <script src="app/reclamacoes/reclamacoes-controller.js"></script>
 		<script src="app/reclamacoes/reclamacao/reclamacao-controller.js"></script>
 		<script src="app/reclamacoes/reclamacao/responder/responder-controller.js"></script>
@@ -123,7 +128,6 @@
 		<script src="app/ocorrencias/responder/responder-controller.js"></script>
 
         <script src="app/usuarios/usuarios-controller.js"></script>
-		<script src="app/services/usuarios-service.js"></script>
 		<script src="app/usuarios/usuario/usuario-controller.js"></script>
 
 		<script src="app/relatorios/relatorios-controller.js"></script>

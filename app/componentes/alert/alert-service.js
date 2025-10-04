@@ -5,7 +5,7 @@
         .module('alert')
         .factory('AlertService', AlertService);
 
-    AlertService.inject = [''];
+    AlertService.$inject = [''];
     function AlertService() {
         var service = {
             showAlert:showAlert

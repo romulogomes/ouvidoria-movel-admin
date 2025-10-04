@@ -2,11 +2,11 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .factory('OcorrenciasService', OcorrenciasService);
 
-    OcorrenciasService.inject = ['$http'];
-    function OcorrenciasService($http) {
+    OcorrenciasService.$inject = ['$http', 'API_CONFIG'];
+    function OcorrenciasService($http, API_CONFIG) {
         var service = {
             getByType:              getByType,
             getByTypeStatus:        getByTypeStatus,
@@ -21,21 +21,12 @@
 
         ////////////////
         function getByType(id) { 
-            var url = 'http://www.doitsolucoes.com/apps/ouvidoria/ocorrencias_tipo.php';
-            var dados = {"tipo": id};
-             return $http({
-                method: 'POST',
+            var url = API_CONFIG.BASE_URL + '/ocorrencias/all?tipo=' + id;
+            return $http({
+                method: 'GET',
                 url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -49,21 +40,12 @@
         }
 
         function getByTypeStatus(id, status) {
-            var url = 'http://www.doitsolucoes.com/apps/ouvidoria/ocorrencias_tipo_status.php';
-            var dados = {"tipo": id, "status": status};
-             return $http({
-                method: 'POST',
+            var url = API_CONFIG.BASE_URL + '/ocorrencias/all?tipo=' + id + '&status=' + status;
+            return $http({
+                method: 'GET',
                 url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -77,21 +59,12 @@
         }
 
         function getOcorrencia(id){
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/get_ocorrencia.php";
-            var dados = {"id_ocorrencia": id};
+            var url = API_CONFIG.BASE_URL + '/ocorrencias/' + id;
             return $http({
-                method: 'POST',
+                method: 'GET',
                 url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -105,21 +78,12 @@
         }
 
         function getRespostasOcorrencia(id){
-            var url = "http://doitsolucoes.com/apps/ouvidoria/lista_respostas_ocorrencia.php";
-            var dados = {"ocorrencia": id};
+            var url = API_CONFIG.BASE_URL + '/ocorrencias/' + id + '/respostas_ocorrencia';
             return $http({
-                method: 'POST',
+                method: 'GET',
                 url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -133,21 +97,12 @@
         }
 
         function getOcorrenciasUsuario(id_tipo, id_usuario){
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/lista_ocorrencia.php";
-            var dados = {"usuario": id_usuario, "tipo": id_tipo};
+            var url = API_CONFIG.BASE_URL + '/usuarios/' + id_usuario + '/ocorrencias?tipo=' + id_tipo;
             return $http({
-                method: 'POST',
+                method: 'GET',
                 url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS
             })
             .then(function(response){
                 if (typeof response == 'object'){
@@ -163,22 +118,15 @@
         function respOcorrencia(ocorrencia, resposta) {
             var dados = {
                 "descricao": resposta.descricao,
-                "ocorrencia": ocorrencia.id_ocorrencia,
-                "admin_fk": 1,
+                "ocorrencia_id": ocorrencia.id || ocorrencia.id_ocorrencia,
+                "administrador_id": 1
             };
 
             return $http({
                 method: 'POST',
-                url: 'http://www.doitsolucoes.com/apps/ouvidoria/cadastra_resposta_ocorrencia.php',
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
+                url: API_CONFIG.BASE_URL + '/respostas_ocorrencia',
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS,
                 data: dados
             }).then(function successCallback(response) {
                 if (typeof response == 'object'){
@@ -192,20 +140,12 @@
         }
 
         function mudaStatus(id, status){
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/muda_status.php";
-            var dados = {"id_ocorrencia": id, "status": status};
+            var dados = {"status": status};
             return $http({
-                method: 'POST',
-                url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
+                method: 'PUT',
+                url: API_CONFIG.BASE_URL + '/ocorrencias/' + id,
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS,
                 data: dados
             })
             .then(function(response){

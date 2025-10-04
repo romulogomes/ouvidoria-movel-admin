@@ -2,25 +2,25 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('AdminController', AdminController);
 
-    AdminController.inject = ['$scope', '$rootScope', '$http', 'breadcrumbs', 'ReclamacoesService'];
-    function AdminController($scope, $rootScope, $http, breadcrumbs, ReclamacoesService) {
+    AdminController.$inject = ['$scope', '$rootScope', '$http', 'ReclamacoesService', 'breadcrumbs'];
+    function AdminController($scope, $rootScope, $http, ReclamacoesService, breadcrumbs) {
         var vm = this;
 
         $scope.breadcrumbs = breadcrumbs;
 
-
-
         $scope.isPage = function (page) {
-            if ($scope.breadcrumbs.get()[breadcrumbs.get().length - 1]) {
-                if ($scope.breadcrumbs.get()[breadcrumbs.get().length - 1].label == page) {
-                    return true;
-                } else {
-                    return false;
+            try {
+                if ($scope.breadcrumbs && $scope.breadcrumbs.get() && $scope.breadcrumbs.get().length > 0) {
+                    var currentBreadcrumb = $scope.breadcrumbs.get()[$scope.breadcrumbs.get().length - 1];
+                    return currentBreadcrumb && currentBreadcrumb.label === page;
                 }
+            } catch (e) {
+                console.log('Breadcrumbs error:', e);
             }
+            return false;
         }
 
         activate();

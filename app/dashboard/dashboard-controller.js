@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('DashBoardController', DashBoardController);
 
-    DashBoardController.inject = ['$scope', '$location', 'ReclamacoesService'];
+    DashBoardController.$inject = ['$scope', '$location', 'ReclamacoesService'];
     function DashBoardController($scope, $location, ReclamacoesService) {
         var vm = this;
 

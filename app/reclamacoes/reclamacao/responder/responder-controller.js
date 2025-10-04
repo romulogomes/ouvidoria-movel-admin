@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('ResponderController', ResponderController);
 
-    ResponderController.inject = ['$scope', '$location', '$routeParams', 'ReclamacoesService', 'AlertService'];
+    ResponderController.$inject = ['$scope', '$location', '$routeParams', 'ReclamacoesService', 'AlertService'];
     function ResponderController($scope, $location, $routeParams, ReclamacoesService, AlertService) {
         var vm = this;
         

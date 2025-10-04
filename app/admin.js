@@ -1,9 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('adminApp', [
-        'app',
-    ])
+    angular.module('app')
     .filter("formatData", formatData);
     function formatData(){
         return function(input){

@@ -5,8 +5,8 @@
         .module('loginApp')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService', '$q'];
-    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService, $q) {
+    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService', '$q', 'API_CONFIG'];
+    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService, $q, API_CONFIG) {
         var service = {};
 
         service.Login = Login;
@@ -18,8 +18,13 @@
 
         function Login(username, password, callback) {
             console.log('login');
-            $http.post('http://www.doitsolucoes.com/apps/ouvidoria/ws/login', { email: username, senha: password })
+            $http.post(API_CONFIG.BASE_URL + '/admin_auth', { email: username, senha: password })
                 .then(function (response) {
+                    // Adaptar resposta para compatibilidade
+                    if (response.data && response.data.id) {
+                        response.data.id_admin = response.data.id;
+                        response.data.nome = response.data.nome;
+                    }
                     callback(response);
                 });
 
@@ -55,26 +60,26 @@
         }
 
         function entrar(usuario) {
-            var url = "http://www.doitsolucoes.com/apps/ouvidoria/login.php";
-            var dados = usuario;
-             return $http({
+            return $http({
                 method: 'POST',
-                url: url,
-                timeout: 5000,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                data: dados
+                url: API_CONFIG.BASE_URL + '/admin_auth',
+                timeout: API_CONFIG.TIMEOUT,
+                headers: API_CONFIG.HEADERS,
+                data: usuario
             })
             .then(function(response){
                 if (typeof response == 'object'){
-                    localStorage.setItem('omAdmin', response.data[0].id_admin);
-                    return response.data;
+                    // Adaptação: API Ruby retorna objeto único, não array
+                    var adminData = response.data;
+                    if (adminData.id) {
+                        localStorage.setItem('omAdmin', adminData.id);
+                        // Adaptar campos para compatibilidade
+                        adminData.id_admin = adminData.id;
+                        adminData.nome = adminData.nome;
+                        return [adminData]; // Manter compatibilidade com formato antigo
+                    } else {
+                        return $q.reject(response.data);
+                    }
                 } else {
                     return $q.reject(response.data);
                 }

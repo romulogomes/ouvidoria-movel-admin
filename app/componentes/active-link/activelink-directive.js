@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .directive('activeLink', activeLink);
 
-    activeLink.inject = ['$location'];
+    activeLink.$inject = ['$location'];
     function activeLink($location) {
         // Usage:
         //
