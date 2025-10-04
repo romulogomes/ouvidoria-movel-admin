@@ -5,7 +5,7 @@
         .module('app')
         .directive('tabelaRespostas', tabelaRespostas);
 
-    tabelaRespostas.$inject = [''];
+    // tabelaRespostas.$inject = []; // No dependencies needed
     function tabelaRespostas() {
         // Usage:
         //

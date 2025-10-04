@@ -90,16 +90,23 @@
                 var l = $scope.reclamacao.localizacao;
                 l = l.split(",");
                 if ($scope.reclamacao.localizacao){
-                    $scope.reclamacao.localizacao = {latitude: l[0], longitude: l[1]};
+                    $scope.reclamacao.localizacao = {latitude: parseFloat(l[0]), longitude: parseFloat(l[1])};
                     uiGmapGoogleMapApi.then(function (maps) {
-                        // var myBounds = new maps.LatLngBounds();
-                        $scope.map = {center: {latitude: l[0], longitude: l[1]}, zoom: 18};
+                        $scope.map = {center: {latitude: parseFloat(l[0]), longitude: parseFloat(l[1])}, zoom: 18};
                         $scope.options = {scrollwheel: false};
                         $scope.marker = {
                             id: 0,
                             coords: $scope.reclamacao.localizacao,
-                            options: { draggable: false, icon: 'img/mapicons/'+$scope.reclamacao.categoria_fk+'.png', title: 'Teste', labelContent: $scope.reclamacao.categoria, labelAnchor: "60 90", labelClass: "labels"}
+                            options: { 
+                                draggable: false, 
+                                icon: 'img/mapicons/'+$scope.reclamacao.categoria_fk+'.png', 
+                                title: $scope.reclamacao.assunto || 'Localização da Reclamação'
+                            }
                         };
+                    }).catch(function(error) {
+                        console.log('Erro ao carregar Google Maps:', error);
+                        var message = '<i class="clip-info"></i> <strong>Erro no Mapa!</strong> Não foi possível carregar o mapa.';
+                        Flash.create('warning', message);
                     });
                 } else {
                     var message = '<i class="clip-info"></i> <strong>Sem Localização!</strong> O usuário não enviou a localização para esta reclamação.';

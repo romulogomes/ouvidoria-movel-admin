@@ -5,7 +5,7 @@
         .module('app')
         .directive('tabelaOcorrencias', tabelaOcorrencias);
 
-    tabelaOcorrencias.$inject = [''];
+    // tabelaOcorrencias.$inject = []; // No dependencies needed
     function tabelaOcorrencias() {
         // Usage:
         //

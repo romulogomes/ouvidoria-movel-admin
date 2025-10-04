@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>Test Complete System</title>
+    <script src="js/lodash.js"></script>
+    <script src="js/moment-with-locales.js"></script>
+    <script src="js/sweetalert2.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-moment-picker.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/angular-google-maps.js"></script>
+    <script src="js/angular-simple-logger.js"></script>
+    <script src="js/loading-bar.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/dirPagination.js"></script>
+    <script src="js/angular-flash.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/ng-breadcrumbs.min.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    
+    <!-- App files -->
+    <script src="app/app.js"></script>
+    <script src="config.js"></script>
+    <script src="app/admin.js"></script>
+    
+    <!-- Services -->
+    <script src="app/services/ocorrencias-service.js"></script>
+    <script src="app/services/dashboard-service.js"></script>
+    <script src="app/services/reclamacoes-service.js"></script>
+    <script src="app/services/usuarios-service.js"></script>
+    
+    <!-- Components -->
+    <script src="app/componentes/alert/alert.js"></script>
+    <script src="app/componentes/alert/alert-service.js"></script>
+    <script src="app/componentes/tabela-ocorrencias/ocorrencias-directive.js"></script>
+    <script src="app/componentes/tabela-respostas/respostas-directive.js"></script>
+    <script src="app/componentes/active-link/activelink-directive.js"></script>
+    
+    <!-- Controllers -->
+    <script src="app/admin-controller.js"></script>
+    <script src="app/sugestoes/sugestoes-controller.js"></script>
+    <script src="app/ocorrencias/detalhes/detalhes-controller.js"></script>
+</head>
+<body ng-controller="AdminController">
+    <h1>Complete System Test</h1>
+    <div ng-view></div>
+    
+    <script>
+        angular.element(document).ready(function() {
+            console.log('Complete system test loaded');
+            console.log('Available services:');
+            console.log('- OcorrenciasService:', angular.injector(['app']).has('OcorrenciasService'));
+            console.log('- API_CONFIG:', angular.injector(['app']).has('API_CONFIG'));
+            console.log('- breadcrumbs:', angular.injector(['app']).has('breadcrumbs'));
+            
+            // Test API configuration
+            var apiConfig = angular.injector(['app']).get('API_CONFIG');
+            console.log('API Config:', apiConfig);
+            
+            // Navigate to sugestões
+            window.location.hash = '#/sugestoes';
+        });
+    </script>
+</body>
+</html>

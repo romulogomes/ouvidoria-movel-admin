@@ -14,7 +14,7 @@
             ReclamacoesService.respOcorrencia($scope.ocorrencia, resposta)
             .then(function(data){
                 if ($scope.ocorrencia.status == "Em Aberto"){
-                    OcorrenciasService.mudaStatus($scope.ocorrencia.id_ocorrencia, "Em Andamento");
+                    OcorrenciasService.mudaStatus($scope.ocorrencia.id, "Em Andamento");
                 }
                 swal({
                     title: 'Resposta enviada!',
@@ -35,7 +35,7 @@
             });
 
             if (resposta.notificar){
-                ReclamacoesService.notificar($scope.ocorrencia.token_cel, $scope.ocorrencia.id_ocorrencia, $scope.ocorrencia.id_tipo_ocorrencia, resposta.descricao)
+                ReclamacoesService.notificar($scope.ocorrencia.token_cel, $scope.ocorrencia.id, $scope.ocorrencia.tipo, resposta.descricao)
                 .then(function(data){
                     console.log(data);
                 })

@@ -5,8 +5,8 @@
         .module('app')
         .factory('OcorrenciasService', OcorrenciasService);
 
-    OcorrenciasService.$inject = ['$http', 'API_CONFIG'];
-    function OcorrenciasService($http, API_CONFIG) {
+    OcorrenciasService.$inject = ['$http', '$q', 'API_CONFIG'];
+    function OcorrenciasService($http, $q, API_CONFIG) {
         var service = {
             getByType:              getByType,
             getByTypeStatus:        getByTypeStatus,

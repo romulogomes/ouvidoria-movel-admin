@@ -21,12 +21,12 @@
                     </thead>
                     <tbody>
                         <tr dir-paginate="ocorrencia in ocorrencias|filter:q|orderBy:sortKey:reverse|itemsPerPage: 10">
-                            <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id_ocorrencia}}">{{ocorrencia.numero_protocolo}}</a></td>
+                            <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id}}">{{ocorrencia.id}}-{{ocorrencia.numero_protocolo}}</a></td>
                             <td>{{ocorrencia.data|formatData}}</td>
-                            <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id_ocorrencia}}">{{ocorrencia.assunto}}</a></td>
+                            <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id}}">{{ocorrencia.assunto}}</a></td>
                             <td>{{getLabelSetor(ocorrencia.setor)}}</td>
                             <td><span class="label label-sm label-{{status[ocorrencia.status]}}">{{ocorrencia.status}}</span></td>
-                            <td><a ng-href="#/usuarios/usuario/{{ocorrencia.usuario_fk}}">{{ocorrencia.nome}}</a></td>
+                            <td><a ng-href="#/usuarios/usuario/{{ocorrencia.usuario_id}}">{{ocorrencia.usuario.nome}}</a></td>
                         </tr>
                     </tbody>
                 </table>
