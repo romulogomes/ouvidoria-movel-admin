@@ -1,0 +1,51 @@
+(function() {
+    'use strict';
+
+    angular
+        .module('adminApp')
+        .directive('tabelaRespostas', tabelaRespostas);
+
+    tabelaRespostas.inject = [''];
+    function tabelaRespostas() {
+        // Usage:
+        //
+        // Creates:
+        //
+        var directive = {
+            controller: 'TabRespostasController',
+            replace: true,
+            templateUrl: 'app/componentes/tabela-respostas/tabela-respostas.html',
+            restrict: 'E',
+            scope: {
+                respostas: '=respostas'
+            }
+        };
+        return directive;
+        
+        function link(scope, element, attrs) {
+        }
+    }
+})();
+
+(function() {
+'use strict';
+
+    angular
+        .module('adminApp')
+        .controller('TabRespostasController', TabRespostasController);
+
+    TabRespostasController.inject = ['$scope'];
+    function TabRespostasController($scope) {
+        var vm = this;
+         $scope.ordenar = function(keyname){
+            $scope.sortKey = keyname;
+            $scope.reverse = !$scope.reverse;
+        };
+
+        activate();
+
+        ////////////////
+
+        function activate() { }
+    }
+})();

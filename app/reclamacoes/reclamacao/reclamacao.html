@@ -1,0 +1,142 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>Nº do Protocolo: {{reclamacao.numero_protocolo}}</h3>
+        <spam class="pull-right">
+            <a ng-show="reclamacao.status == 'Em Aberto'" ng-click="indeferir(reclamacao)" href=""
+                class="btn btn-danger btn-squared btn-lg"><i class="clip-close"></i> Indeferir</a>
+            <a ng-hide="reclamacao.status == 'Encerrada'" ng-click="encerrar(reclamacao)" href=""
+                class="btn btn-success btn-squared btn-lg"><i class="clip-checkmark-2"></i> Encerrar</a>
+            <a ng-href="#./{{local}}/responder" class="btn btn-green btn-squared btn-lg"><i class="clip-bubbles-2"></i>
+                Responder</a>
+        </spam>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h3><i class="clip-bubble-4"></i> {{reclamacao.categoria}}</h3>
+        <div class="thumbnail">
+            <a href="./upload/{{reclamacao.imagem_url}}" target="_blank">
+                <img style="height: 225px;" class="image" ng-src="upload/{{reclamacao.imagem_url}}"
+                    alt="Imagem não encontrada no servidor" src="img/loading.gif">
+            </a>
+            <div class="caption">
+                <p>
+                    <strong>Descrição:</strong>
+                    <!--<p ng-bind="ocorrencia.descricao"></p>-->
+                    <spam>{{reclamacao.descricao}}</spam>
+                </p>
+                <p>
+                    <strong>Status:</strong>
+                    <span class="label label-sm label-{{status[reclamacao.status]}}">{{reclamacao.status}}</span>
+                </p>
+                <hr>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Informações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Usuário:</td>
+                            <td>
+                                <a ng-click="mostraUsuario()" href="#/usuarios/usuario/{{reclamacao.usuario_fk}}">
+                                    {{reclamacao.nome}}
+                                </a>
+                            </td>
+                            <td><a href="#panel_edit_account" class="show-tab"><i
+                                        class="fa fa-pencil edit-user-info"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td>Data:</td>
+                            <td>
+                                <a href="">
+                                    {{reclamacao.data|formatData}}
+                                </a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h3><i class="clip-location"></i> Localização</h3>
+        <div class="thumbnail">
+            <!--<div id="map"></div>-->
+            <div id="map_canvas">
+                <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+                    <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events"
+                        idkey="marker.id">
+                    </ui-gmap-marker>
+                </ui-gmap-google-map>
+            </div>
+            <div class="caption">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Endereço</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Endereço:</strong></td>
+                            <td>{{reclamacao.endereco}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bairro:</strong></td>
+                            <td>{{reclamacao.bairro}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h3><i class="clip-bubbles-2"></i> Respostas para essa reclamação</h3>
+        <div class="alert alert-warning" ng-show="reclamacao.respostas==''">
+            <button data-dismiss="alert" class="close">
+                ×
+            </button>
+            <i class="fa fa-exclamation-triangle"></i>
+            <strong>Sem respostas!</strong> Esta reclamação ainda não foi respondida nenhuma vez, clique em responder
+            para enviar uma resposta ao usuário.
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 pull-right">
+        <input ng-model="q" id="search" class="form-control" placeholder="Pesquisar...">
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="table-responsive" ng-hide="reclamacao.respostas==''">
+            <table class="table table-bordered table-hover" id="sample-table-1">
+                <thead>
+                    <tr>
+                        <th><a href="" ng-click="ordenar('data')">Data</a></th>
+                        <th>Descrição</th>
+                        <th> <a href="" ng-click="ordenar('nome')">Administrador</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        dir-paginate="resposta in reclamacao.respostas|filter:q|orderBy:sortKey:reverse|itemsPerPage: 5">
+                        <td>{{resposta.data|formatData}}</td>
+                        <td>{{resposta.descricao}}</td>
+                        <td>{{resposta.nome}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls maxsize="5" boundary-links="true"></dir-pagination-controls>
+        </div>
+    </div>
+</div>

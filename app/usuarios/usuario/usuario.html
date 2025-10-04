@@ -1,0 +1,189 @@
+<div class="row">
+    <div class="col-md-4">
+        <h3><i class="clip-user"></i> Usuário</h3>
+        <div class="thumbnail">
+            <center>
+                <img class="thumbnail" src="img/user.png" alt="" width="200">
+                <!-- <hr>
+                <p>
+                    <a class="btn btn-social-icon btn-twitter">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a class="btn btn-social-icon btn-linkedin">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                    <a class="btn btn-social-icon btn-google">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <a class="btn btn-social-icon btn-facebook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </p>
+                <hr> -->
+            </center>
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="3">Informações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Status do Usuário: </td>
+                        <td>
+                            <span class="label label-sm label-success" ng-if="usuario.ativo === '1'">Ativo</span>
+                            <span class="label label-sm label-danger" ng-if="usuario.ativo === '0'">Inativo</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nome:</td>
+                        <td>
+                            <a ng-href="#/usuarios/usuario/{{usuario.id_usuario}}">
+                                {{usuario.nome}}
+                            </a>
+                        </td>
+                        <td><a href="#panel_edit_account" class="show-tab"><i
+                                    class="fa fa-pencil edit-user-info"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>E-mail:</td>
+                        <td>
+                            <a href="">
+                                {{usuario.email}}
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Telefone:</td>
+                        <td>
+                            <a href="">
+                                {{usuario.telefone}}
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Endereço:</td>
+                        <td>
+                            <a href="">
+                                {{usuario.endereco}}
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Bairro:</td>
+                        <td>
+                            <a href="">
+                                {{usuario.bairro}}
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-sm-12">
+                    <center>
+                        <button ng-click="reativaUsuario(usuario.id_usuario)" class="btn btn-warning" ng-if="usuario.ativo === '0'">
+                            Reativar Usuário <i class="fa fa-check"></i>
+                        </button>
+                        <button ng-click="desativaUsuario(usuario.id_usuario)" class="btn btn-bricky" ng-if="usuario.ativo != '0'">
+                            Desativar Usuário <i class="fa fa-times"></i>
+                        </button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h3><i class="clip-user"></i> Participação</h3>
+        <div class="row">
+            <div class="col-sm-3">
+                <button ng-class="{'button-active': isActive(1)}" class="btn btn-icon btn-block" ng-click="setTab(1)">
+                    <i class="clip-lamp"></i>
+                    Sugestões <span class="badge badge-info"> {{usuario.sugestoes.length}} </span>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button ng-class="{'button-active': isActive(2)}" class="btn btn-icon btn-block" ng-click="setTab(2)">
+                    <i class="clip-thumbs-up-2"></i>
+                    Críticas <span class="badge badge-info"> {{usuario.criticas.length}} </span>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button ng-class="{'button-active': isActive(3)}" class="btn btn-icon btn-block" ng-click="setTab(3)">
+                    <i class="clip-notification"></i>
+                    Denúncias <span class="badge badge-info"> {{usuario.denuncias.length}} </span>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button ng-class="{'button-active': isActive(4)}" class="btn btn-icon btn-block pulsate"
+                    ng-click="setTab(4)"
+                    style="outline: 0px; box-shadow: rgba(196, 60, 53, 0) 0px 0px 13px; outline-offset: 20px;">
+                    <i class="clip-bubble-4"></i>
+                    Reclamações <span class="badge badge-info"> {{usuario.reclamacoes.length}} </span>
+                </button>
+            </div>
+        </div>
+        <h3><i class="clip-bubble-4"></i> Manifestações</h3>
+        <br>
+        <div class="row" ng-show="isActive(1)">
+            <div class="col-md-12">
+                <tabela-ocorrencias tipo='sugestoes' ocorrencias='usuario.sugestoes' status="status">
+                </tabela-ocorrencias>
+            </div>
+        </div>
+        <div class="row" ng-show="isActive(2)">
+            <div class="col-md-12">
+                <tabela-ocorrencias tipo='criticas' ocorrencias='usuario.criticas' status="status" v>
+                </tabela-ocorrencias>
+            </div>
+        </div>
+        <div class="row" ng-show="isActive(3)">
+            <div class="col-md-12">
+                <tabela-ocorrencias tipo='denuncias' ocorrencias='usuario.denuncias' status="status">
+                </tabela-ocorrencias>
+            </div>
+        </div>
+        <div class="row" ng-show="isActive(4)">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4 pull-right">
+                        <input ng-model="q" id="search" class="form-control" placeholder="Pesquisar...">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="sample-table-1">
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Data</th>
+                                        <th>Endereço</th>
+                                        <th>Categoria</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="reclamacao in usuario.reclamacoes|filter:q|itemsPerPage: 8">
+                                        <td><a ng-href="#/reclamacoes/reclamacao/{{reclamacao.id_reclamacao}}">
+                                                {{reclamacao.descricao}} </a></td>
+                                        <td>{{reclamacao.data | formatData}}</td>
+                                        <td>{{reclamacao.endereco}}</td>
+                                        <td><span
+                                                class="label label-sm label-{{reclamacao.categoria_fk}}">{{reclamacao.categoria}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls maxsize="5" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

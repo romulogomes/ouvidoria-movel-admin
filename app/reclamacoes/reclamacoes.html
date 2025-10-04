@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+            <label for="form-field-select-1">
+                Status
+            </label>
+            <select id="form-field-select-1" class="form-control" ng-model="selectedStatus"
+                ng-change="getReclamacoes()">
+                <option ng-repeat="option in statusList" value="{{option}}">{{option}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <div class="row">
+        <div class="col-md-4 pull-right">
+            <input ng-model="q" id="search" class="form-control" placeholder="Pesquisar...">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="sample-table-1">
+                    <thead>
+                        <tr>
+                            <th><a href="" ng-click="ordenar('numero_protocolo')">Protocolo</a></th>
+                            <th><a href="" ng-click="ordenar('descricao')">Descrição</a></th>
+                            <th><a href="" ng-click="ordenar('data')">Data</a></th>
+                            <th>Endereço</th>
+                            <th><a href="" ng-click="ordenar('status')">Status</a></th>
+                            <th><a href="" ng-click="ordenar('categoria')">Categoria</a></th>
+                            <th><a href="" ng-click="ordenar('nome_usuario')">Usuário</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="reclamacao in reclamacoes|filter:q|orderBy:sortKey:reverse|itemsPerPage: 10">
+                            <td><a ng-href="#/reclamacoes/reclamacao/{{reclamacao.id_reclamacao}}">
+                                    {{reclamacao.numero_protocolo}} </a></td>
+                            <td><a ng-href="#/reclamacoes/reclamacao/{{reclamacao.id_reclamacao}}">
+                                    {{reclamacao.descricao}}
+                                </a></td>
+                            <td>{{reclamacao.data|formatData}}</td>
+                            <td>{{reclamacao.endereco}}</td>
+                            <td><span
+                                    class="label label-sm label-{{status[reclamacao.status]}}">{{reclamacao.status}}</span>
+                            </td>
+                            <td><span
+                                    class="label label-sm label-{{reclamacao.categoria_fk}}">{{reclamacao.categoria}}</span>
+                            </td>
+                            <td><a
+                                    ng-href="#/usuarios/usuario/{{reclamacao.usuario_fk}}">{{reclamacao.nome_usuario}}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls maxsize="5" boundary-links="true"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <h4>Descrição dos Status</h4>
+            <div style="margin: 16px" ng-repeat="statusDesc in statusDescriptions">
+                <span class="label label-sm label-{{status[statusDesc.name]}}">{{statusDesc.name}}</span> -
+                {{statusDesc.description}}
+            </div>
+        </div>
+    </div>
+
+</div>

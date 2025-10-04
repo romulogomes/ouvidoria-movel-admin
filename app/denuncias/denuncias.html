@@ -1,0 +1,16 @@
+<div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+                <label for="form-field-select-1">
+                    Status
+                </label>
+                <select id="form-field-select-1" class="form-control" ng-model="selectedStatus"
+                    ng-change="getOcorrencias()">
+                    <option ng-repeat="option in statusList" value="{{option}}">{{option}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <tabela-ocorrencias tipo='denuncias' ocorrencias='denuncias' status='status'></tabela-ocorrencias>
+</div>

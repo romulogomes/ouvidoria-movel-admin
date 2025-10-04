@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Ouvidoria</title>
+
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="css/sweetalert.css">
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.min.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body ng-app="megamixApp" ng-controller="megamixCtrl">
+  <div class="navbar-fixed"  ng-hide="esconde">
+    <nav class="light-blue lighten-1" role="navigation" style="position: fixed">
+    <div class="nav-wrapper" style="width: 90%; margin: 0 auto">
+        <a id="logo-container" href="#/categorias" class="brand-logo">
+          <img src="img/logo3.png" alt="ofertas">
+          <!--<h5>Ouvidoria Móvel</h5>-->
+          
+        </a>
+        
+       <!--ul class="right ">
+        <li><a href="#/pesquisa" style="margin-top: 2px;"><i class="fa fa-search" style="font-size: 1.4em" aria-hidden="true"></i></a></li>
+      </ul-->
+      <ul id="nav-mobile" class="side-nav">
+        <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">     
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            
+            <div class="menu-top">
+              <div class="menu-top-img">
+                <img alt="John Smith" src="img/prefeitura.png">
+              </div>
+              
+            </div>
+            
+            <hr style="background-color: #bdbdbd; position: relative; display: block; height: 1px; margin: 8px 0; padding: 0; overflow: hidden;">
+                        
+
+            <li class="bold" ng-repeat="menu in menus"><a class="collapsible-header  waves-effect waves-orange" href="{{menu.link}}" ng-click="hide_menu(item.nome_subcategoria)">
+              <i class="fa {{menu.icone}}" aria-hidden="true"></i>{{menu.nome_categoria}}</a>
+            </li> 
+          </ul>
+        </li>
+       </ul>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars" aria-hidden="true" style="font-size: 1.5rem;"></i></a>
+    </div>
+    </nav>
+  </div>
+
+  <div class="container" style="width: 100%">
+    <!--<div class="swiper-container" ng-hide="esconde_slide">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="imagem_slide" src="img/back3.png"></div>
+            </div>           
+    </div>
+    -->
+    <!--<div id="listra_amarela">
+    </div>
+    -->
+    <ng-view class="transicao" id="ng-vi"></ng-view>
+  </div>
+
+
+  <!--  Scripts-->
+  <script src="js/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  
+  <script src="js/init.js"></script>
+  <script src="cordova.js"></script>
+  <script src="js/index.js"></script>
+  
+  <script src="js/controller/opcoes.js"></script>
+  <script src="js/controller/login.js"></script>
+  <script src="js/controller/inicial.js"></script>
+  <script src="js/controller/cadastro.js"></script>
+  <script src="js/controller/categorias.js"></script>
+  <script src="js/controller/reclamacao.js"></script>
+  <script src="js/controller/minhas.js"></script>
+  <script src="js/controller/perfil.js"></script>
+  
+  <script src="js/geolocalizacao.js"></script>
+  <script src="js/controller/testecam.js"></script>
+  <script src="js/controller/detalhamento.js"></script>
+  <script src="js/controller/offline.js"></script>
+  <script src="js/megamixCtrl.js"></script>
+
+  <script src="js/controller/pesquisa.js"></script>
+  
+  <script src="js/sweetalert.min.js"></script>
+  <script src="js/geolocalizacao.js"></script>
+  
+
+  <script src="js/fastclick.js"></script>
+  <script>
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+        }, false);
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiRBqVSvziDPwHM_ih6RuuQiQHmD1BUS4"></script>    
+  
+  </body>
+</html>

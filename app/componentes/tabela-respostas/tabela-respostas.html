@@ -1,0 +1,44 @@
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="clip-bubbles-2"></i> Respostas para essa Ocorrência</h3>
+            <div class="alert alert-warning" ng-show="respostas==''">
+                <button data-dismiss="alert" class="close">
+                    ×
+                </button>
+                <i class="fa fa-exclamation-triangle"></i>
+                <strong>Sem respostas!</strong> Esta Ocorrência ainda não foi respondida nenhuma vez, clique em responder para enviar uma resposta ao usuário.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 pull-right" ng-hide="respostas==''">
+            <input ng-model="q" id="search" class="form-control" placeholder="Pesquisar...">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div class="table-responsive" ng-hide="respostas==''">            
+                <table class="table table-bordered table-hover" id="sample-table-1">
+                    <thead>
+                        <tr>
+                            <th><a href="" ng-click="ordenar('data')">Data</a></th>
+                            <th>Descrição</th>
+                            <th> <a href="" ng-click="ordenar('nome')">Administrador</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="resposta in respostas|filter:q|orderBy:sortKey:reverse|itemsPerPage: 5">
+                            <td>{{resposta.data|formatData}}</td>
+                            <td>{{resposta.descricao}}</td>
+                            <td>{{resposta.nome}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls maxsize="5" boundary-links="true"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

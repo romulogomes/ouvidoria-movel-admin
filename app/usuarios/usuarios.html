@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-4 pull-right">
+        <input ng-model="q" id="search" class="form-control" placeholder="Pesquisar...">
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="sample-table-1">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th><a href="" ng-click="ordenar('nome')">Nome</a></th>
+                        <th>E-mail</th>
+                        <th>Endereço</th>
+                        <th><a href="" ng-click="ordenar('bairro')">Bairro</a></th>
+                        <th>Telefone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="usuario in usuarios|filter:q|orderBy:sortKey:reverse|itemsPerPage: 10">
+                        <th>
+                            <span class="label label-sm label-success" ng-if="usuario.ativo === '1'">Ativo</span>
+                            <span class="label label-sm label-danger" ng-if="usuario.ativo === '0'">Inativo</span>
+                        </th>
+                        <td><a ng-href="#/usuarios/usuario/{{usuario.id_usuario}}"> {{usuario.nome}} </a></td>
+                        <td>{{usuario.email}}</td>
+                        <td>{{usuario.endereco}}</td>
+                        <td>{{usuario.bairro}}</td>
+                        <td>{{usuario.telefone}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls maxsize="5" boundary-links="true"></dir-pagination-controls>
+        </div>
+    </div>
+</div>

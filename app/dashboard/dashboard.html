@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+            <label for="form-field-select-1">
+                Status
+            </label>
+            <select id="form-field-select-1" class="form-control" ng-model="selectedStatus" ng-change="getReclamacoes()">
+                <option ng-repeat="option in statusList" value="{{option}}">{{option}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="map_canvas">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+            <ui-gmap-markers models="randomMarkers" coords="'self'" icon="'icon'" click="click">
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div style="margin: 16px" ng-repeat="statusDesc in statusDescriptions">
+            <span class="label label-sm label-{{status[statusDesc.name]}}">{{statusDesc.name}}</span> - {{statusDesc.description}}
+        </div>
+    </div>
+</div>

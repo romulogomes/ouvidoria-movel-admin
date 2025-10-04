@@ -1,0 +1,97 @@
+.ng-invalid.ng-dirty{
+	border-color:#FA787E;
+}
+
+.ng-valid.ng-dirty{
+	border-color: #049351;
+}
+
+
+.shadow{
+	box-shadow: -20px 20px 40px grey;
+	color: grey;
+}
+
+body{
+	background-color: #F5F5F5;
+}
+
+h3 {
+    font-family: 'Raleway', sans-serif;
+}
+
+.greenicon{
+	color:#049351;
+}
+
+.table-wrapper {
+    border: 1px solid #ddd; 
+    padding: 16px;
+}
+
+.fa.form-control-feedback {
+    line-height: 34px; /* @input-height-base; */
+}
+.input-sm ~ .fa.form-control-feedback {
+    line-height: 30px; /* @input-height-base; */
+}
+.input-lg ~ .fa.form-control-feedback {
+    line-height: 46px; /* @input-height-base; */
+}
+
+.has-feedback-left input.form-control {
+    padding-left: 34px; /* @input-height-base; */
+    padding-right: 12px; /* @padding-base-horizontal */
+}
+
+.has-feedback-left .form-control-feedback {
+    left: 0; 
+}
+.form-horizontal .has-feedback-left .form-control-feedback {
+    left: 12px; /* @grid-gutter-width / 2 */
+}
+
+.has-feedback-left input.input-sm {
+  padding-left: 30px;  @input-height-small;
+}
+.has-feedback-left input.input-lg {
+  padding-left: 46px;  @input-height-large;
+}
+
+.label-1{
+    background-color: #7B5548;
+}
+
+.label-2{
+    background-color: #48B14C;
+}
+.label-3{
+    background-color: #FEED19;
+}
+.label-4{
+    background-color: #6834BC;
+}
+.label-5{
+    background-color: #F7412C;
+}
+.label-6{
+    background-color: #607D8D;
+}
+.label-7{
+    background-color: #00A7F6;
+}
+.label-8{
+    background-color: #FF5608;
+}
+.label-9{
+    background-color: #00BCD7;
+}
+.label-10{
+    background-color: #89C541;
+}
+
+.button-active{
+    background-color: wheat;
+}
+
+

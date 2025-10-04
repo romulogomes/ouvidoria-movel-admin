@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8 no-js" lang="pt"><![endif]-->
+<!--[if IE 9]><html class="ie9 no-js" lang="pt"><![endif]-->
+<!--[if !IE]><!-->
+<html lang="pt" class="no-js" ng-app="adminApp">
+	<!--<![endif]-->
+	<!-- start: HEAD -->
+	<head>
+		<title>Ouvidoria Móvel - Admin</title>
+		<!-- start: META -->
+		<meta charset="utf-8" />
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta content="Área de Administração Ouvidoria Móvel" name="description" />
+		<meta content="Douglas Henrique" name="author" />
+		<!-- end: META -->
+		<!-- start: MAIN CSS -->
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/fonts/style.css">
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/main-responsive.css">
+		<link rel="stylesheet" href="assets/plugins/iCheck/skins/all.css">
+		<link rel="stylesheet" href="assets/plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css">
+		<link rel="stylesheet" href="assets/plugins/perfect-scrollbar/src/perfect-scrollbar.css">
+		<link rel="stylesheet" href="assets/css/theme_light.css" type="text/css" id="skin_color">
+		<link rel="stylesheet" href="assets/css/print.css" type="text/css" media="print"/>
+		<link rel="stylesheet" href="css/style.css" type="text/css"/>
+		<link rel="stylesheet" href="css/pace.css" type="text/css"/>
+		<link rel="stylesheet" href="css/angular-flash.min.css" type="text/css"/>
+		<link rel="stylesheet" href="css/angular-moment-picker.min.css" type="text/css"/>
+		<link rel="stylesheet" href="css/sweetalert2.min.css" type="text/css"/>
+		<style>	
+		.angular-google-map-container {
+			height: 500px;
+		}
+		.angular-google-map {
+			height: 500px;
+		}
+
+		.my_label {
+			color: black;
+			background-color: beige;
+			font-family: "Lucida Grande", "Arial", sans-serif;
+			font-size: 10px;
+			text-align: center;
+			width: auto;     
+			white-space: nowrap;
+			padding: 4px;
+			border: 1px solid grey;
+			border-radius:3px;   
+			box-shadow: 2px 2px 20px #888888;
+		}
+
+		.labels{
+			color: #fff;
+			background-color: #009CDF;
+			border-radius:3px;   
+			box-shadow: 2px 2px 20px #888888;
+			font-weight: bold;
+			font-size: 14px;
+			opacity: 1;
+			pointer-events: none;
+			text-align: center;
+			width: 120px;
+			white-space: nowrap;
+		}
+		</style>
+		<!--[if IE 7]>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome-ie7.min.css">
+		<![endif]-->
+		<!-- end: MAIN CSS -->
+		<!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+		<link rel="shortcut icon" href="favicon.ico" />
+		<script src="js/lodash.js"></script>
+		<script src="js/moment-with-locales.js"></script>
+		<script src="js/sweetalert2.min.js"></script>
+
+        <script src="js/angular.min.js"></script>
+		<script src="js/angular-moment-picker.min.js"></script>
+		<script src="js/angular-animate.min.js"></script>
+		<script src="js/angular-google-maps.js"></script>
+		<script src="js/angular-simple-logger.js"></script>
+        <script src="js/loading-bar.min.js"></script>
+        <script src="js/angular-route.min.js"></script>
+		<script src="js/pace.min.js"></script>
+		<script src="js/dirPagination.js"></script>
+		<script src="js/angular-flash.min.js"></script>
+		<script src="js/angular-cookies.min.js"></script>
+		<script src="js/ng-breadcrumbs.min.js"></script>
+
+
+        <script src="app/app.js"></script>
+        <script src="app/admin.js"></script>
+        <script src="app/admin-controller.js"></script>
+		<script src="app/componentes/alert/alert.js"></script>
+		<script src="app/componentes/alert/alert-service.js"></script>
+
+		<script src="app/services/ocorrencias-service.js"></script>
+		<script src="app/componentes/tabela-ocorrencias/ocorrencias-directive.js"></script>
+		<script src="app/componentes/tabela-respostas/respostas-directive.js"></script>
+		<script src="app/componentes/active-link/activelink-directive.js"></script>
+
+		<script src="app/dashboard/dashboard-controller.js"></script>
+
+		<script src="app/sugestoes/sugestoes-controller.js"></script>
+
+		<script src="app/services/reclamacoes-service.js"></script>
+        <script src="app/reclamacoes/reclamacoes-controller.js"></script>
+		<script src="app/reclamacoes/reclamacao/reclamacao-controller.js"></script>
+		<script src="app/reclamacoes/reclamacao/responder/responder-controller.js"></script>
+
+		<script src="app/criticas/criticas-controller.js"></script>
+
+		<script src="app/elogios/elogios-controller.js"></script>
+
+		<script src="app/denuncias/denuncias-controller.js"></script>
+
+		<script src="app/ocorrencias/detalhes/detalhes-controller.js"></script>
+		<script src="app/ocorrencias/responder/responder-controller.js"></script>
+
+        <script src="app/usuarios/usuarios-controller.js"></script>
+		<script src="app/services/usuarios-service.js"></script>
+		<script src="app/usuarios/usuario/usuario-controller.js"></script>
+
+		<script src="app/relatorios/relatorios-controller.js"></script>
+		<!--<script src="app/responder/responder-controller.js"></script>-->
+
+	</head>
+	<!-- end: HEAD -->
+	<!-- start: BODY -->
+	<body ng-controller="AdminController" ng-cloak>
+		<!-- start: HEADER -->
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<!-- start: TOP NAVIGATION CONTAINER -->
+			<div class="container">
+				<div class="navbar-header">
+					<!-- start: RESPONSIVE MENU TOGGLER -->
+					<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+						<span class="clip-list-2"></span>
+					</button>
+					<!-- end: RESPONSIVE MENU TOGGLER -->
+					<!-- start: LOGO -->
+					<a class="navbar-brand" ng-href="#/">
+						<img style="width: auto; height: 100%;" src="img/logo2.png" alt="">
+						<!--<img src="img/logo.png" alt="">-->
+					</a>
+					<!-- end: LOGO -->
+				</div>
+				<div class="navbar-tools">
+					<!-- start: TOP NAVIGATION MENU -->
+					<ul class="nav navbar-right">
+						<!-- start: NOTIFICATION DROPDOWN -->
+						<li class="dropdown">
+							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="">
+								<i class="clip-notification-2"></i>
+								<span class="badge"> 1</span>
+							</a>
+							<ul class="dropdown-menu notifications">
+								<li>
+									<span class="dropdown-menu-title"> 1 Nova(s) mensagem(ns) </span>
+								</li>
+								<li>
+									<div class="drop-down-wrapper">
+										<ul>
+											<li>
+												<a href="">
+													<span class="label label-primary"><i class="fa fa-user"></i></span>
+													<span class="message"> Bem vindo a versão de demonstração</span>
+													<span class="time"> 1 min</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li class="view-all">
+									<a href="">
+										Ver todas as notificações <i class="fa fa-arrow-circle-o-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- end: NOTIFICATION DROPDOWN -->
+						<!-- start: MESSAGE DROPDOWN -->
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-close-others="true" data-hover="dropdown" data-toggle="dropdown" href="">
+								<i class="clip-bubble-3"></i>
+								<span class="badge"> {{ultreclamacoes.length}}</span>
+							</a>
+							<ul class="dropdown-menu posts">
+								<li>
+									<span class="dropdown-menu-title"> {{ultreclamacoes.length}} Novas Reclamações</span>
+								</li>
+								<li>
+									<div class="drop-down-wrapper">
+										<ul>
+											<li ng-repeat="reclamacao in ultreclamacoes">
+												<a ng-href="#/reclamacoes/reclamacao/{{reclamacao.id_reclamacao}}">
+													<div class="clearfix">
+														<div class="thread-image">
+															<img alt="" src="img/man.png">
+														</div>
+														<div class="thread-content">
+															<span class="author">{{reclamacao.nome_usuario}}</span>
+															<span class="preview">{{reclamacao.descricao}}</span>
+															<span class="time"> {{reclamacao.data|formatData}}</span>
+														</div>
+													</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li class="view-all">
+									<a href="#/reclamacoes">
+										Ver todas as reclamações <i class="fa fa-arrow-circle-o-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- end: MESSAGE DROPDOWN -->
+						<!-- start: USER DROPDOWN -->
+						<li class="dropdown current-user">
+							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="">
+								<img src="assets/images/avatar-1-small.jpg" class="circle-img" alt="">
+								<span class="username">{{globals.currentUser.username}}</span>
+								<i class="clip-chevron-down"></i>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="divider"></li>
+								<li>
+									<a href="login.html">
+										<i class="clip-exit"></i>
+										&nbsp;Sair
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- end: USER DROPDOWN -->
+					</ul>
+					<!-- end: TOP NAVIGATION MENU -->
+				</div>
+			</div>
+			<!-- end: TOP NAVIGATION CONTAINER -->
+		</div>
+		<!-- end: HEADER -->
+		<!-- start: MAIN CONTAINER -->
+		<div class="main-container">
+			<div class="navbar-content">
+				<!-- start: SIDEBAR -->
+				<div class="main-navigation navbar-collapse collapse">
+					<!-- start: MAIN MENU TOGGLER BUTTON -->
+					<div class="navigation-toggler">
+						<i class="clip-chevron-left"></i>
+						<i class="clip-chevron-right"></i>
+					</div>
+					<!-- end: MAIN MENU TOGGLER BUTTON -->
+					<!-- start: MAIN NAVIGATION MENU -->
+					<ul class="main-navigation-menu">
+						<li ng-class="{active: isPage('Dashboard'), open: isPage('Dashboard')}">
+							<a  ng-href="#/"><i class="clip-home-3"></i>
+								<span class="title"> Dashboard </span><span ng-class="{selected: isPage('Dashboard')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Sugestões'), open: isPage('Sugestões')}">
+							<a ng-href="#sugestoes"><i class="clip-lamp"></i>
+								<span class="title"> Sugestões </span><span ng-class="{selected: isPage('Sugestões')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Reclamações'), open: isPage('Reclamações')}">
+							<a ng-href="#reclamacoes"><i class="clip-bubble-4"></i>
+								<span class="title"> Reclamações </span><span ng-class="{selected: isPage('Reclamações')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Críticas'), open: isPage('Críticas')}">
+							<a ng-href="#criticas"><i class="clip-thumbs-up-2"></i>
+								<span class="title"> Críticas </span><span ng-class="{selected: isPage('Críticas')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Elogios'), open: isPage('Elogios')}">
+							<a ng-href="#elogios"><i class="clip-thumbs-up"></i>
+								<span class="title"> Elogios </span><span ng-class="{selected: isPage('Elogios')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Denúncias'), open: isPage('Denúncias')}">
+							<a ng-href="#denuncias"><i class="clip-notification"></i>
+								<span class="title"> Denúncias </span><span ng-class="{selected: isPage('Denúncias')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Usuários'), open: isPage('Usuários')}">
+							<a ng-href="#/usuarios"><i class="clip-user"></i>
+								<span class="title"> Usuários </span><span ng-class="{selected: isPage('Usuários')}"></span>
+							</a>
+						</li>
+						<li ng-class="{active: isPage('Relatórios'), open: isPage('Relatórios')}">
+							<a ng-href=""><i class="clip-airplane"></i>
+								<span class="title"> Relatórios </span><i class="icon-arrow"></i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="#/relatorios">
+										<span class="title"> Manifestações por Espécie </span>
+									</a>
+								</li>
+								<li>
+									<a href="#/relatorios">
+										<span class="title"> Proporções </span>
+									</a>
+								</li>
+								<li>
+									<a href="#/relatorios">
+										<span class="title"> Percentuais de Atendimento </span>
+									</a>
+								</li>
+								<li>
+									<a href="#/relatorios">
+										<span class="title"> Níveis de Satisfação </span>
+									</a>
+								</li>
+								<li>
+									<a href="#/relatorios">
+										<span class="title"> Indicadores </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<!-- end: MAIN NAVIGATION MENU -->
+				</div>
+				<!-- end: SIDEBAR -->
+			</div>
+			<!-- start: PAGE -->
+			<div class="main-content">
+				<!-- end: SPANEL CONFIGURATION MODAL FORM -->
+				<div class="container">
+					<!-- start: PAGE HEADER -->
+					<div class="row">
+						<div class="col-sm-12">
+							<!-- start: PAGE TITLE & BREADCRUMB -->
+							<!--<div id="loading-bar-container"></div>-->
+							<ol class="ab-nav breadcrumb">
+								<li ng-repeat="breadcrumb in breadcrumbs.get() track by breadcrumb.path" ng-class="{ active: $last }">
+								<a ng-if="!$last" ng-href="#{{ breadcrumb.path }}" ng-bind="breadcrumb.label" class="margin-right-xs"></a>
+								<span ng-if="$last" ng-bind="breadcrumb.label"></span>
+								</li>
+							</ol>
+							<div class="page-header">
+								<h1>{{breadcrumbs.get()[breadcrumbs.get().length-1].label}}</h1>
+                                <flash-message></flash-message>
+							</div>
+							<!-- end: PAGE TITLE & BREADCRUMB -->
+						</div>
+						
+					</div>
+					<!-- end: PAGE HEADER -->
+					<!-- start: PAGE CONTENT -->
+					<ng-view></ng-view>
+					<!-- end: PAGE CONTENT-->
+				</div>
+			</div>
+			<!-- end: PAGE -->
+		</div>
+		<!-- end: MAIN CONTAINER -->
+		<!-- start: FOOTER -->
+		<div class="footer clearfix">
+			<div class="footer-inner">
+				<center>
+					2021 &copy; Ouvidoria Móvel.
+				</center>
+			</div>
+			<div class="footer-items">
+				<span class="go-top"><i class="clip-chevron-up"></i></span>
+			</div>
+		</div>
+		<!-- end: FOOTER -->
+		<!-- start: MAIN JAVASCRIPTS -->
+		<!--[if lt IE 9]>
+		<script src="assets/plugins/respond.min.js"></script>
+		<script src="assets/plugins/excanvas.min.js"></script>
+		<script type="text/javascript" src="assets/plugins/jQuery-lib/1.10.2/jquery.min.js"></script>
+		<![endif]-->
+		<!--[if gte IE 9]><!-->
+		<script src="assets/plugins/jQuery-lib/2.0.3/jquery.min.js"></script>
+		<!--<![endif]-->
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8Ly5n8sKH-KBM3CxbYX_ITkDKylApC1w&language=pt"r></script> -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6SUEVSvzoQnLUQuTyKwsGP1Df4zq4vpQ"></script>
+		<script src="assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+		<script src="assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+		<script src="assets/plugins/blockUI/jquery.blockUI.js"></script>
+		<script src="assets/plugins/iCheck/jquery.icheck.min.js"></script>
+		<script src="assets/plugins/perfect-scrollbar/src/jquery.mousewheel.js"></script>
+		<script src="assets/plugins/perfect-scrollbar/src/perfect-scrollbar.js"></script>
+		<script src="assets/plugins/less/less-1.5.0.min.js"></script>
+		<script src="assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+		<script src="assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<script>
+			jQuery(document).ready(function() {
+				Main.init();
+			});
+		</script>
+	</body>
+	<!-- end: BODY -->
+</html>
