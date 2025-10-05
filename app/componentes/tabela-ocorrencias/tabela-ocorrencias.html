@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                         <tr dir-paginate="ocorrencia in ocorrencias|filter:q|orderBy:sortKey:reverse|itemsPerPage: 10">
-                            <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id}}">{{ocorrencia.id}}-{{ocorrencia.numero_protocolo}}</a></td>
+                            <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id}}">{{ocorrencia.numero_protocolo}}</a></td>
                             <td>{{ocorrencia.data|formatData}}</td>
                             <td>{{ocorrencia.created_at|date:'dd/MM/yyyy HH:mm:ss'}}</td>
                             <td><a ng-href="#/{{tipo}}/detalhes/{{ocorrencia.id}}">{{ocorrencia.assunto}}</a></td>
