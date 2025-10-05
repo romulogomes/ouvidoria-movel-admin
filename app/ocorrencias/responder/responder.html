@@ -2,7 +2,7 @@
     <div class="col-md-4">
         <h3><i class="clip-bubble-4"></i> {{ocorrencia.assunto}}</h3>
         <div class="thumbnail">
-            <img style="height: 225px;" class="image" ng-src="img/ocorrencias/{{ocorrencia.id_tipo_ocorrencia}}.png" alt="Imagem não encontrada no servidor">
+            <img style="height: 225px;" class="image" ng-src="img/ocorrencias/{{ocorrencia.tipo}}.png" alt="Imagem não encontrada no servidor">
             <div class="caption">
                 <strong>Descrição:</strong>
                 <p ng-bind="ocorrencia.descricao"></p>
@@ -17,7 +17,7 @@
                         <tr>
                             <td>Usuário:</td>
                             <td>
-                            <a href="#/usuarios/usuario/{{ocorrencia.usuario_fk}}">
+                            <a href="#/usuarios/usuario/{{ocorrencia.usuario_id}}">
                                 {{ocorrencia.nome}}
                             </a></td>
                             <td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>

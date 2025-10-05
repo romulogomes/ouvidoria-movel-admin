@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('UsuarioController', UsuarioController);
 
-    UsuarioController.inject = ['$scope', '$rootScope', '$routeParams', 'UsuariosService', 'ReclamacoesService', 'OcorrenciasService'];
+    UsuarioController.$inject = ['$scope', '$rootScope', '$routeParams', 'UsuariosService', 'ReclamacoesService', 'OcorrenciasService'];
     function UsuarioController($scope, $rootScope,  $routeParams, UsuariosService, ReclamacoesService, OcorrenciasService) {
         var vm = this;
 
@@ -33,10 +33,14 @@
 
             UsuariosService.getUsuario($routeParams.id)
                 .then(function(data){
+                    console.log('Dados do usuário recebidos:', data);
+                    console.log('ID do usuário:', data.id);
                     $scope.usuario = data;
                     //Reclamações do usuário
-                    ReclamacoesService.getReclamacoesUsuario(data.id_usuario)
+                    console.log('Carregando reclamações para usuário ID:', data.id);
+                    ReclamacoesService.getReclamacoesUsuario(data.id)
                     .then(function(data){
+                        console.log('Reclamações recebidas:', data);
                         if (Array.isArray(data)){
                             $scope.usuario.reclamacoes = data;
                         } else {
@@ -48,7 +52,7 @@
                     });
                     
                     //Sugestões do usuário
-                    OcorrenciasService.getOcorrenciasUsuario(1, data.id_usuario)
+                    OcorrenciasService.getOcorrenciasUsuario(1, data.id)
                     .then(function(data){
                         if (Array.isArray(data)){
                             $scope.usuario.sugestoes = data;
@@ -61,7 +65,7 @@
                     });
 
                     //Críticas do usuário
-                    OcorrenciasService.getOcorrenciasUsuario(2, data.id_usuario)
+                    OcorrenciasService.getOcorrenciasUsuario(2, data.id)
                     .then(function(data){
                         if (Array.isArray(data)){
                             $scope.usuario.criticas = data;
@@ -74,7 +78,7 @@
                     });
 
                     //Denúncias do usuário
-                    OcorrenciasService.getOcorrenciasUsuario(3, data.id_usuario)
+                    OcorrenciasService.getOcorrenciasUsuario(3, data.id)
                     .then(function(data){
                         if (Array.isArray(data)){
                             $scope.usuario.denuncias = data;

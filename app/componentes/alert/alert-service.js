@@ -5,7 +5,7 @@
         .module('alert')
         .factory('AlertService', AlertService);
 
-    AlertService.inject = [''];
+    // AlertService.$inject = []; // No dependencies needed
     function AlertService() {
         var service = {
             showAlert:showAlert

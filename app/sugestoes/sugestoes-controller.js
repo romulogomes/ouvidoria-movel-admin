@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('SugestoesController', SugestoesController);
 
-    SugestoesController.inject = ['$scope', 'OcorrenciasService'];
+    SugestoesController.$inject = ['$scope', 'OcorrenciasService'];
     function SugestoesController($scope, OcorrenciasService) {
         var vm = this;
 
-        $scope.statusList = ['Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
+        $scope.statusList = ['Todos', 'Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
         $scope.selectedStatus = $scope.statusList[0];
 
         $scope.sugestoes = [];
@@ -25,12 +25,15 @@
         }
 
         function getOcorrencias() {
-            OcorrenciasService.getByTypeStatus(1, $scope.selectedStatus)
-                .then(function (data) {
-                    $scope.sugestoes = data;
-                }, function (data) {
-                    console.log(data);
-                });
+            var serviceCall = $scope.selectedStatus === 'Todos' ? 
+                OcorrenciasService.getByType(1) : 
+                OcorrenciasService.getByTypeStatus(1, $scope.selectedStatus);
+                
+            serviceCall.then(function (data) {
+                $scope.sugestoes = data;
+            }, function (data) {
+                console.log(data);
+            });
         }
     }
 })();

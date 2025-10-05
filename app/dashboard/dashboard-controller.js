@@ -2,15 +2,15 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('DashBoardController', DashBoardController);
 
-    DashBoardController.inject = ['$scope', '$location', 'ReclamacoesService'];
+    DashBoardController.$inject = ['$scope', '$location', 'ReclamacoesService'];
     function DashBoardController($scope, $location, ReclamacoesService) {
         var vm = this;
 
-        $scope.statusList = ['Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
-        $scope.selectedStatus = $scope.statusList[0];
+        $scope.statusList = ['Todos', 'Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
+        $scope.selectedStatus = $scope.statusList[0]; // "Todos"
 
         $scope.getReclamacoes = getReclamacoes;
 
@@ -23,9 +23,12 @@
         }
 
         function getReclamacoes() {
-
-            // ReclamacoesService.getReclamacoes()
-            ReclamacoesService.getReclamacoesStatus($scope.selectedStatus)
+            // Se "Todos" estiver selecionado, busca todas as reclamações, senão filtra por status
+            var serviceCall = ($scope.selectedStatus === 'Todos') ? 
+                ReclamacoesService.getReclamacoes() : 
+                ReclamacoesService.getReclamacoesStatus($scope.selectedStatus);
+            
+            serviceCall
                 .then(function (data) {
                     $scope.reclamacoes = data;
                     
@@ -33,21 +36,17 @@
                     var markers = [];
                     if (data.length) {
                         data.forEach(function (reclamacao) {
-                            if (reclamacao.localizacao) {
+                            if (reclamacao.localizacao && reclamacao.categoria_id) {
                                 var l = reclamacao.localizacao.split(',');
+                                var reclamacaoId = reclamacao.id; // Usar o ID correto
                                 var marker = {
-                                    icon: "img/mapicons/" + reclamacao.categoria_fk + ".png",
+                                    icon: "img/mapicons/" + reclamacao.categoria_id + ".png",
                                     id: i,
                                     latitude: l[0],
                                     longitude: l[1],
-                                    // shape: shape,
                                     title: reclamacao.categoria,
-                                    animation: google.maps.Animation.DROP,
                                     click: function (a, b, c) {
-                                        $location.path('/reclamacoes/reclamacao/' + reclamacao.id_reclamacao);
-                                    },
-                                    events: function (marker, eventName, model) {
-                                        console.log(eventName);
+                                        $location.path('/reclamacoes/reclamacao/' + reclamacaoId);
                                     }
                                 }
                                 markers.push(marker);

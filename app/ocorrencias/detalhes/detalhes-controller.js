@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('DetalhesController', DetalhesController);
 
-    DetalhesController.inject = ['$scope', '$location', '$routeParams', 'OcorrenciasService', 'UsuariosService'];
+    DetalhesController.$inject = ['$scope', '$location', '$routeParams', 'OcorrenciasService', 'UsuariosService'];
     function DetalhesController($scope, $location, $routeParams, OcorrenciasService, UsuariosService) {
         var vm = this;
         
@@ -19,7 +19,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, encerrar!'
             }).then(function () {
-                OcorrenciasService.mudaStatus(ocorrencia.id_ocorrencia, "Encerrada")
+                OcorrenciasService.mudaStatus(ocorrencia.id, "Encerrada")
                 .then(function(data){
                     $scope.ocorrencia.status = "Encerrada";
                     swal(
@@ -44,7 +44,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, encerrar!'
             }).then(function () {
-                OcorrenciasService.mudaStatus(ocorrencia.id_ocorrencia, "Indeferida")
+                OcorrenciasService.mudaStatus(ocorrencia.id, "Indeferida")
                 .then(function(data){
                     $scope.ocorrencia.status = "Indeferida";
                     swal(
@@ -68,7 +68,7 @@
             .then(function(data){
                 $scope.ocorrencia = data;
                 //pega o usuário da ocorrência
-                UsuariosService.getUsuario($scope.ocorrencia.usuario_fk)
+                UsuariosService.getUsuario($scope.ocorrencia.usuario_id)
                 .then(function(data){
                     $scope.ocorrencia.usuario = data;
                 }, function(data){

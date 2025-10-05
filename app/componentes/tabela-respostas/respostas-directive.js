@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .directive('tabelaRespostas', tabelaRespostas);
 
-    tabelaRespostas.inject = [''];
+    // tabelaRespostas.$inject = []; // No dependencies needed
     function tabelaRespostas() {
         // Usage:
         //
@@ -31,10 +31,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('TabRespostasController', TabRespostasController);
 
-    TabRespostasController.inject = ['$scope'];
+    TabRespostasController.$inject = ['$scope'];
     function TabRespostasController($scope) {
         var vm = this;
          $scope.ordenar = function(keyname){

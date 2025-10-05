@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('RelatoriosController', RelatoriosController);
 
-    RelatoriosController.inject = ['$scope'];
+    RelatoriosController.$inject = ['$scope'];
     function RelatoriosController($scope) {
         var vm = this;
         

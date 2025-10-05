@@ -41,9 +41,9 @@
         // $locationProvider.html5Mode(true);
 
         uiGmapGoogleMapApiProvider.configure({
-            key: 'AIzaSyB8Ly5n8sKH-KBM3CxbYX_ITkDKylApC1w',
-            v: '3.20',
-            libraries: 'weather,geometry,visualization'
+            key: 'AIzaSyB6SUEVSvzoQnLUQuTyKwsGP1Df4zq4vpQ',
+            v: '3.35',  // Updated to a more recent version
+            libraries: 'places,geometry'  // Simplified libraries
         })
 
         cfpLoadingBarProvider.includeSpinner = true;

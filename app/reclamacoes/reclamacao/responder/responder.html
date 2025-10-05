@@ -1,6 +1,6 @@
 <div class="row">  
     <div class="col-sm-4">
-        <h3><i class="clip-bubble-4"></i> {{reclamacao.categoria}}</h3>
+        <h3><i class="clip-bubble-4"></i> {{reclamacao.categoria.nome}}</h3>
         <div class="thumbnail">
             <img style="height: 225px;" class="image" ng-src="upload/{{reclamacao.imagem_url}}" alt="Imagem não encontrada no servidor" height="120" src="img/pin.png">
             <div class="caption">
@@ -17,8 +17,8 @@
                         <tr>
                             <td>Usuário:</td>
                             <td>
-                            <a href="#/usuarios/usuario/{{reclamacao.usuario_fk}}">
-                                {{reclamacao.nome}}
+                            <a href="#/usuarios/usuario/{{reclamacao.usuario_id}}">
+                                {{reclamacao.usuario.nome}}
                             </a></td>
                             <td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>
                         </tr>

@@ -2,10 +2,10 @@
 'use strict';
 
     angular
-        .module('adminApp')
+        .module('app')
         .controller('ReclamacaoController', ReclamacaoController);
 
-    ReclamacaoController.inject = ['$scope', '$routeParams', '$log', '$location', 'ReclamacoesService', 'UsuariosService', 'uiGmapGoogleMapApi', 'Flash'];
+    ReclamacaoController.$inject = ['$scope', '$routeParams', '$log', '$location', 'ReclamacoesService', 'UsuariosService', 'uiGmapGoogleMapApi', 'Flash'];
     function ReclamacaoController($scope, $routeParams, $log, $location, ReclamacoesService, UsuariosService, uiGmapGoogleMapApi, Flash) {
         
         var vm = this;       
@@ -21,7 +21,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, encerrar!'
             }).then(function () {
-                ReclamacoesService.mudaStatus(reclamacao.id_reclamacao, "Encerrada")
+                ReclamacoesService.mudaStatus(reclamacao.id, "Encerrada")
                 .then(function(data){
                     $scope.reclamacao.status = "Encerrada";
                     swal(
@@ -46,7 +46,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, encerrar!'
             }).then(function () {
-                ReclamacoesService.mudaStatus(reclamacao.id_reclamacao, "Indeferida")
+                ReclamacoesService.mudaStatus(reclamacao.id, "Indeferida")
                 .then(function(data){
                     $scope.reclamacao.status = "Indeferida";
                     swal(
@@ -75,7 +75,7 @@
                 $scope.reclamacao = data;
 
                 //Lista as respostas da reclamação
-                ReclamacoesService.getRespostas($scope.reclamacao.id_reclamacao)
+                ReclamacoesService.getRespostas($scope.reclamacao.id)
                 .then(function(data){
                     $scope.reclamacao.respostas = data;
                     if (!$scope.reclamacao.respostas){
@@ -90,16 +90,23 @@
                 var l = $scope.reclamacao.localizacao;
                 l = l.split(",");
                 if ($scope.reclamacao.localizacao){
-                    $scope.reclamacao.localizacao = {latitude: l[0], longitude: l[1]};
+                    $scope.reclamacao.localizacao = {latitude: parseFloat(l[0]), longitude: parseFloat(l[1])};
                     uiGmapGoogleMapApi.then(function (maps) {
-                        // var myBounds = new maps.LatLngBounds();
-                        $scope.map = {center: {latitude: l[0], longitude: l[1]}, zoom: 18};
+                        $scope.map = {center: {latitude: parseFloat(l[0]), longitude: parseFloat(l[1])}, zoom: 18};
                         $scope.options = {scrollwheel: false};
                         $scope.marker = {
                             id: 0,
                             coords: $scope.reclamacao.localizacao,
-                            options: { draggable: false, icon: 'img/mapicons/'+$scope.reclamacao.categoria_fk+'.png', title: 'Teste', labelContent: $scope.reclamacao.categoria, labelAnchor: "60 90", labelClass: "labels"}
+                            options: { 
+                                draggable: false, 
+                                icon: 'img/mapicons/'+$scope.reclamacao.categoria_id+'.png', 
+                                title: $scope.reclamacao.assunto || 'Localização da Reclamação'
+                            }
                         };
+                    }).catch(function(error) {
+                        console.log('Erro ao carregar Google Maps:', error);
+                        var message = '<i class="clip-info"></i> <strong>Erro no Mapa!</strong> Não foi possível carregar o mapa.';
+                        Flash.create('warning', message);
                     });
                 } else {
                     var message = '<i class="clip-info"></i> <strong>Sem Localização!</strong> O usuário não enviou a localização para esta reclamação.';
