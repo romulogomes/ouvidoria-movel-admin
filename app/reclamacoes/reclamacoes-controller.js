@@ -10,7 +10,7 @@
         var vm = this;
 
         $scope.reclamacoes = [];
-        $scope.statusList = ['Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
+        $scope.statusList = ['Todos', 'Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
         $scope.selectedStatus = $scope.statusList[0];
 
         $scope.getReclamacoes = getReclamacoes;
@@ -35,17 +35,20 @@
         }
 
         function getReclamacoes() {
-            ReclamacoesService.getReclamacoesStatus($scope.selectedStatus)
-                .then(function (data) {
-                    if (!data.length) {
-                        var message = '<i class="clip-info"></i> <strong>Sem registros!</strong> Ainda não há nenhuma reclamação cadastrada, tente novamente mais tarde.';
-                        Flash.create('info', message);
-                    } else {
-                        $scope.reclamacoes = data;
-                    }
-                }, function (data) {
-                    console.log(data);
-                });
+            var serviceCall = $scope.selectedStatus === 'Todos' ? 
+                ReclamacoesService.getReclamacoes() : 
+                ReclamacoesService.getReclamacoesStatus($scope.selectedStatus);
+                
+            serviceCall.then(function (data) {
+                if (!data.length) {
+                    var message = '<i class="clip-info"></i> <strong>Sem registros!</strong> Ainda não há nenhuma reclamação cadastrada, tente novamente mais tarde.';
+                    Flash.create('info', message);
+                } else {
+                    $scope.reclamacoes = data;
+                }
+            }, function (data) {
+                console.log(data);
+            });
         }
     }
 })();

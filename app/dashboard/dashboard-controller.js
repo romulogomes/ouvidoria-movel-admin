@@ -9,8 +9,8 @@
     function DashBoardController($scope, $location, ReclamacoesService) {
         var vm = this;
 
-        $scope.statusList = ['Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
-        $scope.selectedStatus = $scope.statusList[0];
+        $scope.statusList = ['Todos', 'Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
+        $scope.selectedStatus = $scope.statusList[0]; // "Todos"
 
         $scope.getReclamacoes = getReclamacoes;
 
@@ -23,11 +23,13 @@
         }
 
         function getReclamacoes() {
-
-            // ReclamacoesService.getReclamacoes()
-            ReclamacoesService.getReclamacoesStatus($scope.selectedStatus)
+            // Se "Todos" estiver selecionado, busca todas as reclamações, senão filtra por status
+            var serviceCall = ($scope.selectedStatus === 'Todos') ? 
+                ReclamacoesService.getReclamacoes() : 
+                ReclamacoesService.getReclamacoesStatus($scope.selectedStatus);
+            
+            serviceCall
                 .then(function (data) {
-                    console.log('Dados recebidos:', data);
                     $scope.reclamacoes = data;
                     
                     var i = 0;
@@ -47,17 +49,12 @@
                                         $location.path('/reclamacoes/reclamacao/' + reclamacaoId);
                                     }
                                 }
-                                console.log('Marcador criado:', marker);
                                 markers.push(marker);
                                 i++;
-                            } else {
-                                console.log('Reclamação ignorada - sem localização ou categoria_id:', reclamacao);
                             }
                         }, this);
                         $scope.markers = markers;
                     }
-                    console.log('Total de marcadores criados:', markers.length);
-                    console.log('Array de marcadores:', markers);
 
                     $scope.map = {
                         center: {
@@ -80,7 +77,6 @@
                         scrollwheel: false
                     };
                     $scope.randomMarkers = markers;
-                    console.log('$scope.randomMarkers definido:', $scope.randomMarkers);
                 }, function (data) {
                     console.log(data);
                 });

@@ -9,7 +9,7 @@
     function ElogiosController($scope, OcorrenciasService) {
         var vm = this;
 
-        $scope.statusList = ['Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
+        $scope.statusList = ['Todos', 'Em Aberto', 'Em Andamento', 'Encerrada', 'Indeferida'];
         $scope.selectedStatus = $scope.statusList[0];
 
         $scope.elogios = [];
@@ -25,12 +25,15 @@
         }
 
         function getOcorrencias() {
-            OcorrenciasService.getByTypeStatus(5, $scope.selectedStatus)
-                .then(function (data) {
-                    $scope.elogios = data;
-                }, function (data) {
-                    console.log(data);
-                });
+            var serviceCall = $scope.selectedStatus === 'Todos' ? 
+                OcorrenciasService.getByType(5) : 
+                OcorrenciasService.getByTypeStatus(5, $scope.selectedStatus);
+                
+            serviceCall.then(function (data) {
+                $scope.elogios = data;
+            }, function (data) {
+                console.log(data);
+            });
         }
     }
 })();

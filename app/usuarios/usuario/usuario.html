@@ -38,7 +38,7 @@
                     <tr>
                         <td>Nome:</td>
                         <td>
-                            <a ng-href="#/usuarios/usuario/{{usuario.id_usuario}}">
+                            <a ng-href="#/usuarios/usuario/{{usuario.id}}">
                                 {{usuario.nome}}
                             </a>
                         </td>
@@ -86,10 +86,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <center>
-                        <button ng-click="reativaUsuario(usuario.id_usuario)" class="btn btn-warning" ng-if="usuario.ativo === '0'">
+                        <button ng-click="reativaUsuario(usuario.id)" class="btn btn-warning" ng-if="usuario.ativo === '0'">
                             Reativar Usuário <i class="fa fa-check"></i>
                         </button>
-                        <button ng-click="desativaUsuario(usuario.id_usuario)" class="btn btn-bricky" ng-if="usuario.ativo != '0'">
+                        <button ng-click="desativaUsuario(usuario.id)" class="btn btn-bricky" ng-if="usuario.ativo != '0'">
                             Desativar Usuário <i class="fa fa-times"></i>
                         </button>
                     </center>
@@ -169,13 +169,11 @@
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="reclamacao in usuario.reclamacoes|filter:q|itemsPerPage: 8">
-                                        <td><a ng-href="#/reclamacoes/reclamacao/{{reclamacao.id_reclamacao}}">
+                                        <td><a ng-href="#/reclamacoes/reclamacao/{{reclamacao.id}}">
                                                 {{reclamacao.descricao}} </a></td>
                                         <td>{{reclamacao.data | formatData}}</td>
                                         <td>{{reclamacao.endereco}}</td>
-                                        <td><span
-                                                class="label label-sm label-{{reclamacao.categoria_fk}}">{{reclamacao.categoria}}</span>
-                                        </td>
+                                        <td><span style="color: black;">{{reclamacao.categoria.nome}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
