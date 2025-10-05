@@ -27,35 +27,37 @@
             // ReclamacoesService.getReclamacoes()
             ReclamacoesService.getReclamacoesStatus($scope.selectedStatus)
                 .then(function (data) {
+                    console.log('Dados recebidos:', data);
                     $scope.reclamacoes = data;
                     
                     var i = 0;
                     var markers = [];
                     if (data.length) {
                         data.forEach(function (reclamacao) {
-                            if (reclamacao.localizacao) {
+                            if (reclamacao.localizacao && reclamacao.categoria_id) {
                                 var l = reclamacao.localizacao.split(',');
+                                var reclamacaoId = reclamacao.id; // Usar o ID correto
                                 var marker = {
-                                    icon: "img/mapicons/" + reclamacao.categoria_fk + ".png",
+                                    icon: "img/mapicons/" + reclamacao.categoria_id + ".png",
                                     id: i,
                                     latitude: l[0],
                                     longitude: l[1],
-                                    // shape: shape,
                                     title: reclamacao.categoria,
-                                    animation: google.maps.Animation.DROP,
                                     click: function (a, b, c) {
-                                        $location.path('/reclamacoes/reclamacao/' + reclamacao.id_reclamacao);
-                                    },
-                                    events: function (marker, eventName, model) {
-                                        console.log(eventName);
+                                        $location.path('/reclamacoes/reclamacao/' + reclamacaoId);
                                     }
                                 }
+                                console.log('Marcador criado:', marker);
                                 markers.push(marker);
                                 i++;
+                            } else {
+                                console.log('Reclamação ignorada - sem localização ou categoria_id:', reclamacao);
                             }
                         }, this);
                         $scope.markers = markers;
                     }
+                    console.log('Total de marcadores criados:', markers.length);
+                    console.log('Array de marcadores:', markers);
 
                     $scope.map = {
                         center: {
@@ -78,6 +80,7 @@
                         scrollwheel: false
                     };
                     $scope.randomMarkers = markers;
+                    console.log('$scope.randomMarkers definido:', $scope.randomMarkers);
                 }, function (data) {
                     console.log(data);
                 });
