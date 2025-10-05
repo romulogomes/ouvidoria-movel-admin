@@ -24,16 +24,16 @@
                 <table class="table table-bordered table-hover" id="sample-table-1">
                     <thead>
                         <tr>
-                            <th><a href="" ng-click="ordenar('data')">Data</a></th>
+                            <th><a href="" ng-click="ordenar('data')">Data/Hora</a></th>
                             <th>Descrição</th>
-                            <th> <a href="" ng-click="ordenar('nome')">Administrador</a></th>
+                            <th><a href="" ng-click="ordenar('nome')">Administrador</a></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr dir-paginate="resposta in respostas|filter:q|orderBy:sortKey:reverse|itemsPerPage: 5">
-                            <td>{{resposta.data|formatData}}</td>
+                            <td>{{resposta.created_at | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                             <td>{{resposta.descricao}}</td>
-                            <td>{{resposta.nome}}</td>
+                            <td>{{resposta.administrador ? resposta.administrador.nome : resposta.nome}}</td>
                         </tr>
                     </tbody>
                 </table>
