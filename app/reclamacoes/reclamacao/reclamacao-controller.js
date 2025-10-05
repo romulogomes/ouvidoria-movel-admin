@@ -21,7 +21,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, encerrar!'
             }).then(function () {
-                ReclamacoesService.mudaStatus(reclamacao.id_reclamacao, "Encerrada")
+                ReclamacoesService.mudaStatus(reclamacao.id, "Encerrada")
                 .then(function(data){
                     $scope.reclamacao.status = "Encerrada";
                     swal(
@@ -46,7 +46,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, encerrar!'
             }).then(function () {
-                ReclamacoesService.mudaStatus(reclamacao.id_reclamacao, "Indeferida")
+                ReclamacoesService.mudaStatus(reclamacao.id, "Indeferida")
                 .then(function(data){
                     $scope.reclamacao.status = "Indeferida";
                     swal(
@@ -75,7 +75,7 @@
                 $scope.reclamacao = data;
 
                 //Lista as respostas da reclamação
-                ReclamacoesService.getRespostas($scope.reclamacao.id_reclamacao)
+                ReclamacoesService.getRespostas($scope.reclamacao.id)
                 .then(function(data){
                     $scope.reclamacao.respostas = data;
                     if (!$scope.reclamacao.respostas){
@@ -99,7 +99,7 @@
                             coords: $scope.reclamacao.localizacao,
                             options: { 
                                 draggable: false, 
-                                icon: 'img/mapicons/'+$scope.reclamacao.categoria_fk+'.png', 
+                                icon: 'img/mapicons/'+$scope.reclamacao.categoria_id+'.png', 
                                 title: $scope.reclamacao.assunto || 'Localização da Reclamação'
                             }
                         };

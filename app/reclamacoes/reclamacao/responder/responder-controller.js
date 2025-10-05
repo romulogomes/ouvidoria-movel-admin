@@ -13,7 +13,7 @@
             ReclamacoesService.respReclamacao($scope.reclamacao, resposta)
             .then(function(data){
                 if ($scope.reclamacao.status == "Em Aberto"){
-                    ReclamacoesService.mudaStatus($scope.reclamacao.id_reclamacao, "Em Andamento");
+                    ReclamacoesService.mudaStatus($scope.reclamacao.id, "Em Andamento");
                 }
                 swal({
                     title: 'Resposta enviada!',
@@ -35,7 +35,7 @@
             });
 
             if (resposta.notificar){
-                ReclamacoesService.notificar($scope.reclamacao.token_cel, $scope.reclamacao.id_reclamacao, 4, resposta.descricao)
+                ReclamacoesService.notificar($scope.reclamacao.token_cel, $scope.reclamacao.id, 4, resposta.descricao)
                 .then(function(data){
                     console.log(data);
                 })
