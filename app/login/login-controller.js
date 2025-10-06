@@ -17,30 +17,47 @@
         })();
 
         function login(usuario) {
+            // Validação básica
+            if (!usuario || !usuario.email || !usuario.senha) {
+                alert('Por favor, preencha email e senha.');
+                return;
+            }
+
             $scope.loading = true;
+            var requestCompleted = false;
+
+            // Timeout para evitar loading infinito
+            var timeout = setTimeout(function() {
+                if (!requestCompleted) {
+                    requestCompleted = true;
+                    $scope.$evalAsync(function() {
+                        $scope.loading = false;
+                    });
+                    alert('Timeout: A requisição demorou muito para responder. Verifique sua conexão.');
+                }
+            }, 15000);
 
             AuthenticationService.Login(usuario.email, usuario.senha, function(response){
-                if (response.data && response.data.erro) {
-                    alert('Usuário ou senha incorreto(s)');
+                if (requestCompleted) return; // Evita executar se timeout já executou
+                
+                requestCompleted = true;
+                clearTimeout(timeout);
+                
+                $scope.$evalAsync(function() {
                     $scope.loading = false;
-                } else if (response.data && response.data.id) {
-                    $scope.loading = false;
-                    var user = response.data;
-                    AuthenticationService.SetCredentials(user.id_admin, user.nome, user.nivel, usuario.senha, function(){
-                        location.href = 'index.html#/';
-                    });
-                } else {
-                    alert('Erro na autenticação');
-                    $scope.loading = false;
-                }
+                    
+                    if (response.data && response.data.erro) {
+                        alert(response.data.mensagem || 'Usuário ou senha incorreto(s)');
+                    } else if (response.data && response.data.id) {
+                        var user = response.data;
+                        AuthenticationService.SetCredentials(user.id_admin, user.nome, user.nivel, usuario.senha, function(){
+                            location.href = 'index.html#/';
+                        });
+                    } else {
+                        alert('Erro na autenticação. Verifique suas credenciais.');
+                    }
+                });
             });
-
-            // TODO: Temporário, alterar autenticação.
-            // if (AuthenticationService.entrar(usuario)) {
-            //     AuthenticationService.SetCredentials(usuario.id_admin, usuario.nome, usuario.nivel, usuario.senha, function () {
-            //         location.href = '../ouvidoria/#/';
-            //     });
-            // }
         };
     }
 

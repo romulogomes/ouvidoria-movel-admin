@@ -12,13 +12,16 @@
         service.Login = Login;
         service.SetCredentials = SetCredentials;
         service.ClearCredentials = ClearCredentials;
-        service.entrar = entrar
+        service.entrar = entrar;
+        service.getApiUrl = function() { return API_CONFIG.BASE_URL; };
 
         return service;
 
         function Login(username, password, callback) {
             console.log('login');
-            $http.post(API_CONFIG.BASE_URL + '/admin_auth', { email: username, senha: password })
+            $http.post(API_CONFIG.BASE_URL + '/admin_auth', { email: username, senha: password }, {
+                timeout: API_CONFIG.TIMEOUT
+            })
                 .then(function (response) {
                     // Adaptar resposta para compatibilidade
                     if (response.data && response.data.id) {
@@ -26,8 +29,32 @@
                         response.data.nome = response.data.nome;
                     }
                     callback(response);
+                })
+                .catch(function (error) {
+                    console.log('Erro no login:', error);
+                    console.log('Status do erro:', error.status);
+                    console.log('Dados do erro:', error.data);
+                    
+                    // Tratar diferentes tipos de erro
+                    var errorResponse = {
+                        data: {
+                            erro: true,
+                            mensagem: 'Erro de conexão. Verifique sua internet.'
+                        }
+                    };
+                    
+                    if (error.status === 400) {
+                        errorResponse.data.mensagem = 'Dados inválidos. Verifique email e senha.';
+                    } else if (error.status === 401) {
+                        errorResponse.data.mensagem = 'Usuário ou senha incorretos.';
+                    } else if (error.status === 0) {
+                        errorResponse.data.mensagem = 'Não foi possível conectar ao servidor. Verifique sua internet.';
+                    } else if (error.status >= 500) {
+                        errorResponse.data.mensagem = 'Erro interno do servidor. Tente novamente mais tarde.';
+                    }
+                    
+                    callback(errorResponse);
                 });
-
         }
 
         function SetCredentials(iduser, username, nivel, password, callback) {
