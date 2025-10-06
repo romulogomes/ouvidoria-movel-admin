@@ -16,8 +16,8 @@
     <div class="col-md-4">
         <h3><i class="clip-bubble-4"></i> {{reclamacao.categoria.nome}}</h3>
         <div class="thumbnail">
-            <a href="./upload/{{reclamacao.imagem_url}}" target="_blank">
-                <img style="height: 225px;" class="image" ng-src="upload/{{reclamacao.imagem_url}}"
+            <a href="{{reclamacao.imagem.url}}" target="_blank">
+                <img style="height: 225px;" class="image" ng-src="{{reclamacao.imagem.url}}"
                     alt="Imagem não encontrada no servidor" src="img/loading.gif">
             </a>
             <div class="caption">
